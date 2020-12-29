@@ -26,4 +26,11 @@ spring.datasource.url=jdbc:mysql://localhost:3306/database_info?useSSL=false&ser
 spring.datasource.username=root
 spring.datasource.password=rodrigoz09
 
+
+POSIBLES DEPENDENCIAS UTILES
+<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 */
