@@ -176,7 +176,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/post/1/limit",
+					"raw": "http://localhost:8080/post/1/limit5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -185,7 +185,7 @@
 					"path": [
 						"post",
 						"1",
-						"limit"
+						"limit5"
 					]
 				}
 			},

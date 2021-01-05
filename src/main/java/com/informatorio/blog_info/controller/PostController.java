@@ -3,6 +3,7 @@ package com.informatorio.blog_info.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,9 +38,7 @@ public class PostController {
 	@Autowired
 	private UserRepository userRepository;
 	
-//	@Autowired
-//	private CommentRepository commentRepository;
-	
+
 	// Obtener todos los elementos de la base de datos y mandar un mensaje de OK con libreria HTTPStatus
 	@GetMapping
 	public ResponseEntity<?> getAllPost() {
@@ -59,27 +58,17 @@ public class PostController {
 	    return new ResponseEntity<>(posts, HttpStatus.OK);
 	  }
 	
-	/*
-	@GetMapping("/limit") 
-	  public ResponseEntity<?> findByAuthor(@RequestParam Int limit) {
-	    List<Comment> comments = commentRepository.findByAuthor(author, PageRequest.of(1, limit));
-	    return new ResponseEntity<>(comments, HttpStatus.OK);
-	  }
-    */
+
 	
-	@GetMapping("/{postId}/limit") 
-    public ResponseEntity<?> findAll(@PathVariable Long postId, Pageable pageable) {
+	@GetMapping("/{postId}/limit{limit}") 
+    public ResponseEntity<?> findById(@PathVariable Long limit, @PathVariable Long postId, Pageable pageable) {
 		Post post = postRepository.getOne(postId);
 	    List<Comment> comments = post.getComments();
-//	    comments = postRepository.findAll(new PageRequest(2, 5));
-		return new ResponseEntity<>(comments, HttpStatus.OK);
+	    Pageable paging = PageRequest.of(1, 5);
+	    Page<Comment> page = new PageImpl<>(comments,paging,limit);
+		return new ResponseEntity<>(page, HttpStatus.OK);
 		}
     
-//	@RequestMapping(value = "/listPageable", method = RequestMethod.GET)
-//	Page<Employee> employeesPageable(Pageable pageable) {
-//		return employeeData.findAll(pageable);
-//
-//	}
 
 	
 	
@@ -92,31 +81,7 @@ public class PostController {
     
 
 
-	/* OPCION B. NO TENER QUE CREAR UN CONTROLADOR DE COMENTARIO Y MANEJARLO COMO SI FUERAN PARTE
-	 * DE LOS POST
-	 * 
-	 * 
-	 * POST Crear un COMMENT
 
-    @PostMapping("/{id_post}/comment")
-    public ResponseEntity<?> createComment(@PathVariable Long id_post, @RequestBody CommentDTO commentDTO) {
-        //1 -Buscar el post a comentar
-        //Post post = postRepository.getOne(id_post);
-
-        //2- Buscar autor del comentari
-        // Long autorComentarioId = commentDTO.getIdAutor()
-        // User user = userRepository.getOne(autorComentarioId)
-
-        //3 - Crear Comment y asociar
-        // Comment comment = new Comentario(...
-        // setter
-        // post.agregarComentario(comennt)
-        // user.agregarComentario(comment)
-        //comentarioRepository.save(comment)
-
-        return null;
-    }
-	 */	
 
 	
 	//Edita TODOS los campos
@@ -129,7 +94,7 @@ public class PostController {
         postEdit.setDate(post.getDate());
         postEdit.setAuthor(post.getAuthor());
         postEdit.setPublished(post.getPublished());
-        return new ResponseEntity<>(postRepository.save(postEdit), HttpStatus.OK);
+        return new ResponseEntity<>(postRepository.save(postEdit), HttpStatus.ACCEPTED);
     }
 	
 	@DeleteMapping("/{postId}")

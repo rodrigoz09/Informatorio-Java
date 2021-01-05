@@ -18,5 +18,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	
 	List<Post> findByTitleLike(String title);
 	
-	List<Comment> findAll(Long id, Pageable pageable);
+	List<Comment> findById(Long limit, Long id, Pageable pageable);
 }

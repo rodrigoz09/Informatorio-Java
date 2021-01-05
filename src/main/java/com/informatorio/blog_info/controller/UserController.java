@@ -68,7 +68,7 @@ public class UserController {
         userEdit.setCity(user.getCity());
         userEdit.setProvince(user.getProvince());
         userEdit.setCountry(user.getCountry());
-        return new ResponseEntity<>(userRepository.save(userEdit), HttpStatus.OK);
+        return new ResponseEntity<>(userRepository.save(userEdit), HttpStatus.ACCEPTED);
     }
 	
 	@DeleteMapping("/{postId}")
