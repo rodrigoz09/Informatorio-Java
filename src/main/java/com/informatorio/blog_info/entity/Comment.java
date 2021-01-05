@@ -1,12 +1,19 @@
 package com.informatorio.blog_info.entity;
 
-import javax.persistence.Column;
+import java.time.LocalDate;
+
+import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Comment {
@@ -15,23 +22,25 @@ public class Comment {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
-    @NotBlank
+//	@Column(nullable = false)
+//    @NotBlank
     @Size(max = 200)
 	private String content;
 	
 	
-	@Column(nullable = false)
-    @NotBlank
-    private String date;
+    private LocalDate date = LocalDate.now(); 
 	
-	
-	
-	@Column(nullable = false)
-    @NotBlank
-    private String author;
-	
-	
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name="author", referencedColumnName = "id")
+    private User author;
+    
+    
+
+	@ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name="post", referencedColumnName = "id")
+    private Post post;
+    
+    
 	public Long getId() {
 		return id;
 	}
@@ -44,19 +53,26 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
-	public String getAuthor() {
+	public User getAuthor() {
 		return author;
 	}
-	public void setAuthor(String author) {
+	public void setAuthor(User author) {
 		this.author = author;
 	}
-
+	
+	@JsonIgnore
+    public Post getPost() {
+		return post;
+	}
+	public void setPost(Post post) {
+		this.post = post;
+	}
 	
 	
 }

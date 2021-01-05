@@ -1,11 +1,16 @@
 package com.informatorio.blog_info.entity;
 
-import javax.persistence.Column;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.OneToMany;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -16,37 +21,30 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
-    @NotBlank
     private String name;
 	
-	@Column(nullable = false)
-    @NotBlank
     private String lastName;
 	
-	@Column(nullable = false)
-    @NotBlank
     private String email;
 
-	@Column(nullable = false)
-    @NotBlank
+
     private String password;
 	
-	@Column(nullable = false)
-    @NotBlank
-    private String date;
+    private LocalDate date = LocalDate.now(); 
 	
-	@Column(nullable = false)
-    @NotBlank
     private String city;
 	
-	@Column(nullable = false)
-    @NotBlank
+
     private String province;
 	
-	@Column(nullable = false)
-    @NotBlank
+
     private String country;
+	
+	 @OneToMany
+	  private List<Post> posts = new ArrayList<>();
+
+	 @OneToMany
+	  private List<Comment> comments = new ArrayList<>();
 	
 	
 	public Long getId() {
@@ -81,10 +79,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	public String getCity() {
@@ -106,6 +104,28 @@ public class User {
 		this.country = country;
 	}
 	
-	
-	
+	public void addPost(Post post) {
+	    this.posts.add(post);
+	    post.setAuthor(this);
+	  }
+
+
+public void addComment(Comment comment) {
+    this.comments.add(comment);
+    comment.setAuthor(this);
+  }
+@JsonIgnore
+public List<Post> getPosts() {
+	return posts;
+}
+public void setPosts(List<Post> posts) {
+	this.posts = posts;
+}
+@JsonIgnore
+public List<Comment> getComments() {
+	return comments;
+}
+public void setComments(List<Comment> comments) {
+	this.comments = comments;
+}
 }

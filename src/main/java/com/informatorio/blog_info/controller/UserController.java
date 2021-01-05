@@ -2,17 +2,24 @@
 package com.informatorio.blog_info.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.time.LocalDate;
+import java.util.List;
+
 import javax.validation.Valid;
+
 
 import com.informatorio.blog_info.repository.UserRepository;
 import com.informatorio.blog_info.entity.User;
@@ -23,14 +30,25 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	
 	// Obtener todos los elementos de la base de datos y mandar un mensaje de OK con libreria HTTPStatus
 	@GetMapping
 	public ResponseEntity<?> getAllUser() {
 		return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
 		}
+
+	@GetMapping("/date") 
+	  public ResponseEntity<?> findByDateAfter(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+	    List<User> users = userRepository.findByDateAfter(date);
+	    return new ResponseEntity<>(users, HttpStatus.OK);
+	  }
 	
 	
-	
+	@GetMapping("/city") 
+	  public ResponseEntity<?> findUserByCity(@RequestParam String city) {
+	    List<User> users = userRepository.findUserByCity(city);
+	    return new ResponseEntity<>(users, HttpStatus.OK);
+	  }
 	
 	@PostMapping
     public ResponseEntity<?> createUser(@RequestBody User user) {

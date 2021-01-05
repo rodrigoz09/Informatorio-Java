@@ -1,9 +1,18 @@
 package com.informatorio.blog_info.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
+
+
+
+
+
+
+
+
 
 @Entity
 public class Post {
@@ -11,14 +20,29 @@ public class Post {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+//	@Column(nullable = false)
+//    @NotBlank
 	private String title;
+	
+
+
 	private String description;
+	
 	private String content;
-	private String date;
-	private String author;
+	
+    private LocalDate date = LocalDate.now(); 
+	
+	
 	private Boolean published;
 	
+
+    @ManyToOne(cascade = CascadeType.DETACH)
+    @JoinColumn(name="author", referencedColumnName = "id")
+    private User author;
 	
+	 @OneToMany
+	  private List<Comment> comments = new ArrayList<>();
 	
 	public Long getId() { return id;}
 	
@@ -36,18 +60,33 @@ public class Post {
 	
 	public void setContent(String content) {this.content = content; }
 	
-	public String getDate() { return date;}
+	public LocalDate getDate() {return date; }
 	
-	public void setDate(String date) {this.date = date; }
+	public void setDate(LocalDate date) {this.date = date; }
 	
-	public String getAuthor() { return author;}
+
+	public User getAuthor() { return author;}
 	
-	public void setAuthor(String author) {this.author = author; }
+	public void setAuthor(User author) {this.author = author; }
 	
 	public Boolean getPublished() { return published;}
 	
+
+
 	public void setPublished(Boolean published) {this.published = published; }
 	
+	public void addComment(Comment comment) {
+	    this.comments.add(comment);
+	    comment.setPost(this);
+	}
+	
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 }
 
 

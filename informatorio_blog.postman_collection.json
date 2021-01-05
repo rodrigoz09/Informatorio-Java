@@ -29,6 +29,58 @@
 			"response": []
 		},
 		{
+			"name": "Get - FindPostByPublished",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/post/published?published=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"published"
+					],
+					"query": [
+						{
+							"key": "published",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get - FindPostByTitle",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/post/title?title=Live",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"title"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Live"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get - GetAllUsers",
 			"request": {
 				"method": "GET",
@@ -42,6 +94,58 @@
 					"port": "8080",
 					"path": [
 						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get - FindUserAfterDate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/date?date=2020-12-15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"date"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2020-12-15"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get - FindUserByCity",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/user/city?city=Resistencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"city"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "Resistencia"
+						}
 					]
 				}
 			},
@@ -67,13 +171,34 @@
 			"response": []
 		},
 		{
+			"name": "Get - Limits Comments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/post/1/limit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"post",
+						"1",
+						"limit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Post - AddPost",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"title\":\"Covid-19 Live Updates: U.S. Air Travel Is Highest Since March, Despite Warnings\",\r\n\"description\":\"Spain’s health ministry said it has registered 50,122 dead since the start of the pandemic. And a proposed law in New York would ban landlords from evicting most tenants.\",\r\n\"content\":\"Total infections surpassed 19 million on Saturday, meaning that at least 1 in 17 people have contracted the virus over the course of the pandemic. And the virus has killed more than 333,000 people — one in every thousand in the country.\",\r\n\"date\":\"25/12/2020\",\r\n\"author\":\"cosme fulano\",\r\n\"published\": false\r\n\r\n}",
+					"raw": "{\r\n\"title\":\"Covid-19 Live Updates: U.S. Air Travel Is Highest Since March, Despite Warnings\",\r\n\"description\":\"Spain’s health ministry said it has registered 50,122 dead since the start of the pandemic.\",\r\n\"content\":\"Total infections surpassed 19 million on Saturday, meaning that at least 1 in 17 people have contracted the virus over the course of the pandemic. And the virus has killed more than 333,000 people — one in every thousand in the country.\",\r\n\"published\": true\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -81,14 +206,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/post",
+					"raw": "http://localhost:8080/post/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"post"
+						"post",
+						"1"
 					]
 				}
 			},
@@ -101,7 +227,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"name\":\"Carlos\",\r\n\"lastName\":\"Garcia\",\r\n\"email\":\"c.garcia@gmail.com\",\r\n\"password\":\"123456789\"\r\n\"date\":\"25/12/2020\",\r\n\"city\":\"Resistencia\",\r\n\"province\": \"Chaco\",\r\n\"country\": \"Argentina\"\r\n}",
+					"raw": "{\r\n\"name\":\"Carlos\",\r\n\"lastName\":\"Garcia\",\r\n\"email\":\"c.garcia@gmail.com\",\r\n\"password\":\"12345t6\",\r\n\"city\":\"Resistencia\",\r\n\"province\": \"Chaco\",\r\n\"country\": \"Argentina\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -129,7 +255,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"content\":\"I don't think you should eat that\",\r\n\"date\":\"25/12/2020\",\r\n\"author\":\"Henry Ford\"\r\n}",
+					"raw": "{\r\n\"content\":\"I don't think you should eat that\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -137,14 +263,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/comment",
+					"raw": "http://localhost:8080/comment/1/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"comment"
+						"comment",
+						"1",
+						"1"
 					]
 				}
 			},
